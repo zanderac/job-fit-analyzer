@@ -102,11 +102,20 @@ Generates:
 ## 📁 Project Structure
 
 job-fit-analyzer/
+
 │
-├── app.py # Main application
-├── resume.json # Candidate profile input
-├── run_app.command # Quick launch script
-├── README.md # Project documentation
+├── app.py                 # Streamlit interface + orchestration layer
+├── resume.json            # Structured candidate profile data
+├── config.json            # Job classification + scoring rules engine
+├── run_app.command        # Local execution launcher
+
+│
+├── core/
+│   ├── classifier.py      # Job type classification logic
+│   ├── scoring.py         # Fit scoring + decision logic
+│   ├── eligibility.py     # Minimum requirement validation layer
+│
+└── README.md              # Project documentation
 
 
 ---
