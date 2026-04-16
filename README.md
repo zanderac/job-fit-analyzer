@@ -18,8 +18,8 @@ Job Fit Analyzer helps users:
 - Provide apply vs. skip recommendations
 
 It is designed for:
-- Federal job applications (DHS, FBI, intelligence roles)
 - Risk, fraud, and operations roles
+- Federal job applications (DHS, FBI, intelligence roles)
 - Career transition and resume optimization
 
 ---
@@ -64,7 +64,7 @@ Provides:
 
 - Python 🐍
 - Streamlit 📊
-- OpenAI API / Claude API 🤖
+- OpenAI API 🤖
 - JSON-based data structure
 - LLM prompt engineering
 
@@ -82,17 +82,34 @@ job-fit-analyzer/
 
 ---
 
+
+
 ## ⚙️ How to Run
 
 ### 1. Install dependencies
+
 ```bash
 pip install -r requirements.txt
+```
 
+---
+
+### 2. Run the app
+
+```bash
 streamlit run app.py
-OR 
-./run_app.command
+```
 
-Example Output
+or
+
+```bash
+./run_app.command
+```
+
+---
+## 🧪 Example Output
+
+```json
 {
   "fit_score": 82,
   "strengths": [
@@ -105,30 +122,40 @@ Example Output
   ],
   "recommendation": "Apply with resume tailoring"
 }
+```
 
+---
 
-🎯 Use Cases
-Federal job applications (DHS, FBI, intelligence)
-Risk & fraud operations roles
-Resume optimization before applying
-Career planning and transition strategy
+## 🎯 Use Cases
 
-🔮 Future Enhancements
-Multi-resume comparison mode
-Job tracking dashboard
-Chrome extension (LinkedIn / USAJobs integration)
-Export tailored resume (PDF/DOCX)
-Multi-model support (GPT + Claude switching)
+- Federal job applications (DHS, FBI, intelligence)
+- Risk & fraud operations roles
+- Resume optimization before applying
+- Career planning and transition strategy
 
-⚠️ Disclaimer
+---
 
-This tool provides AI-generated guidance and should be used as a decision support system, not a hiring guarantee tool.
+## 🔮 Future Enhancements
 
-👤 Author
+- Multi-resume comparison mode
+- Job tracking dashboard
+- Chrome extension (LinkedIn / USAJobs integration)
+- Export tailored resume (PDF/DOCX)
+- Multi-model support (GPT + Claude switching)
 
-Alex Champa
+---
+
+## ⚠️ Disclaimer
+
+This tool provides AI-generated guidance and should be used as a **decision support system**, not a hiring guarantee tool.
+
+---
+
+## 👤 Author
+
+**Alex Champa**
 
 Focus areas:
-Security analysis
-Risk & fraud Analysis
-AI-assisted career tooling
+- Security analysis
+- Risk & fraud analysis
+- AI-assisted career tooling
