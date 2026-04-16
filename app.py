@@ -6,7 +6,7 @@ import os
 # ----------------------
 # OpenAI Client
 # ----------------------
-client = OpenAI()
+client = OpenAI("INSERT_API_KEY_HERE")
 
 st.set_page_config(page_title="Job Fit Analyzer", layout="wide")
 
