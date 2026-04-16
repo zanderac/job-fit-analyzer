@@ -1,0 +1,88 @@
+{
+  "job_fit_layer": {
+    "job_type_definitions": {
+      "Intelligence / Investigations": {
+        "keywords": [
+          "threat intelligence",
+          "intelligence",
+          "investigation",
+          "investigations",
+          "osint",
+          "adversary",
+          "threat actor",
+          "fraud investigation",
+          "case analysis",
+          "pattern analysis",
+          "security analysis",
+          "abuse",
+          "incident investigation"
+        ]
+      },
+
+      "Risk / Fraud / Analytics": {
+        "keywords": [
+          "risk",
+          "fraud",
+          "detection",
+          "monitoring",
+          "analytics",
+          "modeling",
+          "controls",
+          "fraud analyst",
+          "risk analyst",
+          "behavioral"
+        ]
+      },
+
+      "Program / Project Management": {
+        "keywords": [
+          "program manager",
+          "project manager",
+          "roadmap",
+          "stakeholder",
+          "agile",
+          "delivery",
+          "execution",
+          "planning"
+        ]
+      },
+
+      "Operations": {
+        "keywords": [
+          "operations",
+          "case management",
+          "workflow",
+          "queue",
+          "processing",
+          "support",
+          "ticket"
+        ]
+      }
+    },
+
+    "fit_class_rules": {
+      "Strong": { "min_score": 80 },
+      "Medium": { "min_score": 65 },
+      "Weak": { "min_score": 0 }
+    },
+
+    "hard_exclusions": {
+      "excluded_titles_only": true,
+      "titles": [
+        "security engineer",
+        "cloud security engineer",
+        "security architect",
+        "infrastructure engineer",
+        "systems engineer",
+        "network engineer",
+        "devops engineer",
+        "site reliability engineer",
+        "platform engineer",
+        "solutions architect",
+        "data engineer",
+        "software engineer",
+        "ml engineer"
+      ]
+    }
+  }
+}
