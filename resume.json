@@ -4,131 +4,98 @@
     "email": "your.email@example.com",
     "location": "United States"
   },
+
   "titles": [
     "Program Manager",
+    "Fraud Analyst",
     "Risk Analyst",
     "Risk Operations Analyst",
-    "Fraud Analyst"
+    "Security / Intelligence Analyst"
   ],
-  "summary": "Program Manager specializing in fraud prevention, account takeover mitigation, and operational risk analysis across large-scale digital ecosystems. Experience building detection workflows, improving operational efficiency, and analyzing bad actor behavior patterns.",
+
+  "summary": "Fraud, risk, and investigations-focused Program Manager specializing in account takeover detection, adversarial behavior analysis, and operational risk monitoring across large-scale digital ecosystems. Experienced in identifying suspicious activity patterns, supporting investigations, and translating risk signals into actionable insights for fraud and security teams.",
+
   "skills": {
     "technical": [
       "SQL",
       "Data Analysis",
       "Splunk",
-      "Risk Scoring Models",
-      "Process Automation Concepts"
+      "Fraud Detection Systems",
+      "Risk Signal Analysis"
     ],
     "analytical": [
-      "Fraud Detection",
-      "Account Takeover Investigation",
+      "Fraud Investigation",
+      "Account Takeover Analysis",
       "OSINT",
+      "Adversarial Pattern Recognition",
       "Risk Assessment",
-      "Pattern Recognition"
+      "Threat Pattern Analysis"
     ],
     "operational": [
       "Workflow Optimization",
-      "Case Management",
+      "Case Investigation Management",
       "Quality Assurance Frameworks",
       "Backlog Reduction",
-      "Incident Response Coordination"
+      "Incident Triage"
     ]
   },
+
   "experience": [
     {
       "company": "Square (or Current Company)",
       "role": "Program Manager / Fraud & Risk SME",
       "duration": "2022 - Present",
       "responsibilities": [
-        "Serve as Subject Matter Expert for Account Takeover (ATO) detection and mitigation strategies",
-        "Monitor and analyze high-risk activity across customer ecosystem in real time",
-        "Develop and refine fraud detection workflows to improve identification of bad actors",
-        "Lead operational initiatives to reduce backlog and improve case resolution efficiency",
-        "Provide investigative support and risk analysis for complex fraud cases",
-        "Collaborate with engineering and operations teams to implement control improvements",
-        "Analyze fraud trends and translate findings into actionable prevention strategies"
+        "Investigate account takeover and fraud-related activity across high-volume user environments",
+        "Analyze behavioral patterns and risk signals to identify suspicious and potentially malicious activity",
+        "Support fraud and security investigations by triaging alerts and escalating high-risk cases",
+        "Develop and improve detection workflows to enhance identification of bad actors and reduce false negatives",
+        "Conduct adversarial behavior analysis to identify evolving fraud and abuse tactics",
+        "Partner with cross-functional security and risk teams to support investigations and mitigation strategies",
+        "Translate investigation findings into actionable insights for fraud prevention and operational risk reduction"
       ],
       "achievements": [
-        "Reduced backlog of 25K+ cases through workflow optimization initiatives",
-        "Improved detection efficiency through QA framework implementation",
-        "Operationalized fraud detection tooling and risk monitoring processes"
+        "Reduced backlog of 25K+ fraud and risk investigation cases through workflow optimization",
+        "Improved detection accuracy through QA framework implementation",
+        "Enhanced operational fraud monitoring and account takeover detection processes"
       ]
     }
   ],
+
   "projects": [
     {
-      "name": "Backlog Elimination Initiative",
-      "description": "Reduced 25,000+ case backlog through process redesign and prioritization modeling.",
-      "impact": "Improved operational throughput and case resolution speed"
+      "name": "Backlog Reduction Initiative",
+      "description": "Resolved 25,000+ fraud and risk investigation backlog through prioritization and workflow redesign.",
+      "impact": "Improved investigation throughput and case resolution time"
     },
     {
-      "name": "QA Framework Build",
-      "description": "Designed and implemented quality assurance framework for fraud review processes.",
-      "impact": "Increased consistency and accuracy of fraud decisioning"
+      "name": "Fraud QA Framework",
+      "description": "Built structured QA framework to standardize fraud investigation outcomes.",
+      "impact": "Improved consistency and accuracy of fraud decisions"
     },
     {
-      "name": "Pindrop Operationalization",
-      "description": "Integrated and operationalized third-party fraud detection signals.",
-      "impact": "Improved fraud detection accuracy and reduced false negatives"
-    },
-    {
-      "name": "Magic Links Initiative",
-      "description": "Implemented secure authentication flow improvements for customer access.",
-      "impact": "Reduced account takeover surface area"
-    },
-    {
-      "name": "Escheatment Review Program",
-      "description": "Reviewed and processed 10,000+ dormant accounts for compliance and risk exposure.",
-      "impact": "Improved regulatory compliance and account hygiene"
+      "name": "Risk Signal Integration",
+      "description": "Integrated external fraud and risk signals into investigative workflows.",
+      "impact": "Improved detection of suspicious activity patterns"
     }
   ],
+
   "certifications": [
     "CompTIA Security+"
   ],
+
   "focus_areas": [
-    "Intelligence Analysis",
-    "Fraud Detection",
-    "Security Analyst",
-    "Risk Management",
-    "Operations Risk",
-    "Operations Strategy",
-    "Risk Intelligence",
-    "Security Investigations"
-  ],
-  "career_goals": [
-    "Intelligence Analysis (DHS/FBI-aligned roles)",
-    "Security Analyst",
-    "Risk Management Specialist",
-    "Operations Intelligence Roles"
+    "Fraud Investigation",
+    "Threat Intelligence (Applied)",
+    "Risk Analysis",
+    "Adversarial Behavior Analysis",
+    "Security Analysis (Non-Engineering)"
   ],
 
-  "generation_rules": {
-    "bullet_generation": {
-      "structure": "[Action Verb] + [Specific Task/Responsibility] + [How (Tool/Method)] + [Impact/Outcome]",
-      "rules": [
-        "Use strong action verbs: Led, Investigated, Built, Optimized, Reduced, Developed",
-        "Must include at least one tool, system, or method (SQL, Splunk, workflows, risk models, cross-functional processes)",
-        "Must include a measurable outcome or clearly implied business impact",
-        "Each bullet must directly map to a job description responsibility",
-        "Avoid generic phrases like 'demonstrated ability' or 'responsible for'",
-        "Keep bullets concise (1–2 lines max)"
-      ],
-      "pre_processing_steps": [
-        "Extract top 3–5 responsibilities from the job description",
-        "Map candidate experience to those responsibilities before writing bullets",
-        "Align phrasing with target job language and terminology"
-      ],
-      "coverage_requirements": [
-        "Investigation / Analysis",
-        "Process Improvement",
-        "Strategy / Decision-Making",
-        "Cross-functional Collaboration",
-        "Impact / Outcomes"
-      ],
-      "impact_handling": {
-        "if_metrics_exist": "Use exact numbers",
-        "if_metrics_missing": "Infer scale using terms like high-volume, large-scale, enterprise-level, or known figures such as 25K backlog"
-      }
-    }
-  }
+  "career_goals": [
+    "Intelligence Analyst (DHS/FBI-aligned)",
+    "Fraud / Threat Investigator",
+    "Security Intelligence Analyst",
+    "Risk Analyst (Fraud-focused)"
+  ]
 }
