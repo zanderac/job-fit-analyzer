@@ -28,9 +28,7 @@ It is designed for:
 
 ## 🧠 Core Innovation
 
-This system is not a generic resume optimizer.
-
-It introduces a hybrid decision architecture:
+It introduces a hybrid decision architecture, while reducing false-positive role matches by enforcing eligibility rules before applying AI-based scoring.
 
 - **Eligibility-first evaluation layer**
   - Enforces minimum requirements (years of experience, degree requirements)
@@ -44,6 +42,9 @@ It introduces a hybrid decision architecture:
   - Generates structured 0–100 fit score
   - Provides explainable reasoning ("why this score")
   - Outputs APPLY / SKIP decision logic
+
+This system is designed to reduce false-positive job matches by enforcing eligibility constraints before applying AI-based scoring.
+
 
 ---
 
