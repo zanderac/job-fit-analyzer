@@ -4,32 +4,20 @@ import json
 import os
 
 # ----------------------
-# OpenAI Client
+# OPENAI CLIENT
 # ----------------------
-client = OpenAI("INSERT_API_KEY_HERE")
+client = OpenAI()
 
 st.set_page_config(page_title="Job Fit Analyzer", layout="wide")
 
-st.title("Job Fit Analyzer (Dual Mode Engine)")
+st.title("Job Fit Analyzer (Eligibility + Fit Engine)")
 
 st.markdown("""
-Analyze job fit and optimize your resume.
-
-Modes:
-- 🟢 Safe Rewrite (Application Mode)
-- 🟡 Gap Bridge (Planning Mode)
+Evaluates job eligibility + fit for Intelligence, Fraud, Investigations, Security Analysis, and Risk roles.
 """)
 
 # ----------------------
-# Mode Selector
-# ----------------------
-mode = st.radio(
-    "Select Mode",
-    ["Safe Rewrite (Apply Mode)", "Gap Bridge (Planning Mode)"]
-)
-
-# ----------------------
-# Load Resume
+# LOAD FILES
 # ----------------------
 BASE_DIR = os.path.dirname(__file__)
 
@@ -38,69 +26,104 @@ def load_resume():
     with open(path, "r") as f:
         return json.load(f)
 
+def load_config():
+    path = os.path.join(BASE_DIR, "config.json")
+    with open(path, "r") as f:
+        return json.load(f)
+
 resume_json = load_resume()
+config = load_config()
 
 # ----------------------
-# Job Input
+# INPUT
 # ----------------------
 st.subheader("Job Description")
 
-jd_input = st.text_area(
-    "Paste job description here",
-    height=300
-)
+jd_input = st.text_area("Paste job description here", height=300)
 
 # ----------------------
-# Prompt Builder
+# JOB TYPE CLASSIFIER
 # ----------------------
-def build_prompt(resume, job, mode):
+def classify_job(job_text, config):
+    text = job_text.lower()
 
-    if mode == "Safe Rewrite (Apply Mode)":
+    best_match = None
+    best_score = 0
 
-        return f"""
-You are a strict job fit evaluator and resume rewrite engine.
+    for job_type, data in config["job_fit_layer"]["job_type_definitions"].items():
+        score = 0
+        for keyword in data["keywords"]:
+            if keyword.lower() in text:
+                score += 1
 
-MODE: SAFE REWRITE (APPLICATION MODE)
+        if score > best_score:
+            best_score = score
+            best_match = job_type
 
-TASK:
-1. Decide APPLY or SKIP
-2. Score job fit (0–100)
-3. Identify strengths and gaps
-4. Rewrite ONLY existing resume experience into improved bullets
+    return best_match
 
-Return structured output following schema exactly.
+# ----------------------
+# TITLE-ONLY EXCLUSION (SAFE)
+# ----------------------
+def extract_title(job_text):
+    return job_text[:200].lower()
 
-RULES:
-- ONLY use real experience from resume
-- DO NOT invent new work
-- Must include action + tool + impact where possible
-- Keep output concise and job-aligned
+def is_hard_exclusion(job_text, config):
+    title_section = extract_title(job_text)
+    excluded_titles = config["job_fit_layer"]["hard_exclusions"]["titles"]
 
-RESUME:
-{json.dumps(resume, indent=2)}
+    return any(title in title_section for title in excluded_titles)
 
-JOB:
-{job}
-"""
+# ----------------------
+# FIT CLASS
+# ----------------------
+def get_fit_class(score):
+    rules = config["job_fit_layer"]["fit_class_rules"]
 
+    if score >= rules["Strong"]["min_score"]:
+        return "Strong"
+    elif score >= rules["Medium"]["min_score"]:
+        return "Medium"
     else:
+        return "Weak"
 
-        return f"""
-You are a career strategy and skill gap analysis engine.
+# ----------------------
+# PROMPT (ELIGIBILITY FIRST)
+# ----------------------
+def build_prompt(resume, job):
+    return f"""
+You are a job eligibility and fit evaluation engine.
 
-MODE: GAP BRIDGE (PLANNING MODE)
+STEP 1: ELIGIBILITY CHECK (STRICT)
+Evaluate minimum qualifications:
+- years of experience requirement
+- degree requirement
+- must-have skills
 
-TASK:
-1. Identify missing skills and experience gaps
-2. Identify what blocks candidacy
-3. Suggest future resume bullets (clearly hypothetical)
+Return:
+- eligibility_status: PASS / PARTIAL / FAIL
+- eligibility_reason: short explanation
 
-Return structured output following schema exactly.
+STEP 2: JOB TYPE CLASSIFICATION
+Identify if role is aligned to:
+fraud, risk, intelligence, investigations, or security analysis
+
+STEP 3: FIT SCORE (0–100)
+Only after eligibility step.
+
+STEP 4: DECISION
+Return APPLY or SKIP
+
+STEP 5: WHY THIS SCORE (simple)
+Return:
+- key_match
+- key_miss
+- summary
 
 RULES:
-- Future bullets are NOT real experience
-- Clearly represent skills to build toward
-- Focus on fraud, risk, intelligence, investigations
+- Be strict on years of experience
+- Do NOT inflate scores for FAIL eligibility
+- Ignore engineering tools unless they define job title
 
 RESUME:
 {json.dumps(resume, indent=2)}
@@ -110,17 +133,32 @@ JOB:
 """
 
 # ----------------------
-# Run Analysis
+# RUN ANALYSIS
 # ----------------------
 if st.button("Analyze Fit"):
 
-    if not jd_input:
+    if not jd_input.strip():
         st.error("Please paste a job description.")
         st.stop()
 
-    prompt = build_prompt(resume_json, jd_input, mode)
+    # ----------------------
+    # HARD EXCLUSION CHECK
+    # ----------------------
+    if is_hard_exclusion(jd_input, config):
+        st.error("🚫 Excluded Role (Engineering / Infrastructure Title Detected)")
+        st.stop()
 
+    # ----------------------
+    # JOB TYPE
+    # ----------------------
+    job_type = classify_job(jd_input, config)
+
+    # ----------------------
+    # GPT CALL (SAFE WRAPPED)
+    # ----------------------
     try:
+        prompt = build_prompt(resume_json, jd_input)
+
         response = client.chat.completions.create(
             model="gpt-4o",
             temperature=0,
@@ -134,55 +172,33 @@ if st.button("Analyze Fit"):
                     "schema": {
                         "type": "object",
                         "properties": {
-                            "mode": {"type": "string"},
-
+                            "eligibility_status": {
+                                "type": "string",
+                                "enum": ["PASS", "PARTIAL", "FAIL"]
+                            },
+                            "eligibility_reason": {"type": "string"},
                             "decision": {
                                 "type": "string",
                                 "enum": ["APPLY", "SKIP"]
                             },
-
                             "score": {"type": "number"},
-                            "confidence": {
-                                "type": "string",
-                                "enum": ["HIGH", "MEDIUM", "LOW"]
-                            },
-
-                            "fit_drivers": {
+                            "why_this_score": {
                                 "type": "object",
                                 "properties": {
-                                    "strengths": {
-                                        "type": "array",
-                                        "items": {"type": "string"}
-                                    },
-                                    "gaps": {
-                                        "type": "array",
-                                        "items": {"type": "string"}
-                                    }
+                                    "key_match": {"type": "string"},
+                                    "key_miss": {"type": "string"},
+                                    "summary": {"type": "string"}
                                 },
-                                "required": ["strengths", "gaps"]
-                            },
-
-                            "resume_bullet_rewrites": {
-                                "type": "array",
-                                "items": {"type": "string"}
-                            },
-
-                            "missing_skills": {
-                                "type": "array",
-                                "items": {"type": "string"}
-                            },
-
-                            "career_gaps": {
-                                "type": "array",
-                                "items": {"type": "string"}
-                            },
-
-                            "future_resume_bullets": {
-                                "type": "array",
-                                "items": {"type": "string"}
+                                "required": ["key_match", "key_miss", "summary"]
                             }
                         },
-                        "required": ["mode"]
+                        "required": [
+                            "eligibility_status",
+                            "eligibility_reason",
+                            "decision",
+                            "score",
+                            "why_this_score"
+                        ]
                     }
                 }
             }
@@ -190,54 +206,39 @@ if st.button("Analyze Fit"):
 
         output = json.loads(response.choices[0].message.content)
 
+        score = output.get("score", 0)
+        fit_class = get_fit_class(score)
+
         # ----------------------
         # UI OUTPUT
         # ----------------------
-        st.subheader("Results")
+        st.subheader("Job Fit Results")
 
-        st.write(f"Mode: {output.get('mode')}")
+        st.write(f"Job Type: {job_type}")
+        st.write(f"Score: {score}")
+        st.write(f"Fit Class: {fit_class}")
 
-        # ----------------------
-        # SAFE REWRITE MODE
-        # ----------------------
-        if output.get("mode") == "Safe Rewrite (Apply Mode)" or output.get("resume_bullet_rewrites"):
+        st.divider()
 
-            st.subheader("Decision")
+        st.subheader("Eligibility Check")
+        st.write(output["eligibility_status"])
+        st.write(output["eligibility_reason"])
 
-            if output.get("decision") == "APPLY":
-                st.success("APPLY")
-            else:
-                st.error("SKIP")
+        st.divider()
 
-            st.write(f"Score: {output.get('score')}")
-            st.write(f"Confidence: {output.get('confidence')}")
-
-            col1, col2 = st.columns(2)
-
-            with col1:
-                st.subheader("Strengths")
-                st.write(output["fit_drivers"]["strengths"])
-
-                st.subheader("Resume Bullet Rewrites")
-                st.write(output.get("resume_bullet_rewrites", []))
-
-            with col2:
-                st.subheader("Gaps")
-                st.write(output["fit_drivers"]["gaps"])
-
-        # ----------------------
-        # GAP BRIDGE MODE
-        # ----------------------
+        if output["decision"] == "APPLY":
+            st.success("APPLY")
         else:
+            st.error("SKIP")
 
-            st.subheader("Missing Skills")
-            st.write(output.get("missing_skills", []))
+        st.divider()
 
-            st.subheader("Career Gaps")
-            st.write(output.get("career_gaps", []))
+        st.subheader("Why This Score")
 
-            st.subheader("Future Resume Bullets (Planning Only)")
-            st.write(output.get("future_resume_bullets", []))
+        st.write("Key Match:", output["why_this_score"]["key_match"])
+        st.write("Key Miss:", output["why_this_score"]["key_miss"])
+        st.write("Summary:", output["why_this_score"]["summary"])
 
     except Exception as e:
-        st.error(f"Error: {str(e)}")
+        st.error("Something went wrong during analysis.")
+        st.exception(e)
