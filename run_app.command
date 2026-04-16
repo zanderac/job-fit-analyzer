@@ -1,5 +1,5 @@
 #!/bin/zsh
 
-cd ~/Desktop/job_fit_tools
+cd ~/Desktop/job_fit_analyzer
 
-streamlit run job_fit_analyzer.py
+streamlit run app.py
