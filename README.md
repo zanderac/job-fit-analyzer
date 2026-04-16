@@ -1,11 +1,13 @@
-# 📊 Job Fit Analyzer
+# 📊 Job Eligibility & Role Fit Decision Engine
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
 ![Streamlit](https://img.shields.io/badge/Streamlit-App-red.svg)
 ![AI](https://img.shields.io/badge/LLM-OpenAI%2FClaude-green.svg)
 ![Status](https://img.shields.io/badge/Status-Active-success.svg)
 
-AI-powered tool that analyzes job descriptions against a candidate profile and generates **fit scores, gap analysis, and resume tailoring recommendations**.
+AI-powered decision system that evaluates job eligibility and role alignment for Intelligence, Fraud, Security, and Risk analytics positions.
+
+The system combines rule-based classification with LLM-driven scoring to determine whether a candidate is truly qualified based on experience thresholds, role type alignment, and structured fit analysis.
 
 ---
 
@@ -24,49 +26,76 @@ It is designed for:
 
 ---
 
+## 🧠 Core Innovation
+
+This system is not a generic resume optimizer.
+
+It introduces a hybrid decision architecture:
+
+- **Eligibility-first evaluation layer**
+  - Enforces minimum requirements (years of experience, degree requirements)
+  - Prevents inflated AI scoring for non-qualified roles
+
+- **Role classification engine**
+  - Identifies job type (Intelligence, Fraud, Risk, Investigations, Security Analysis)
+  - Filters out non-target domains
+
+- **LLM-assisted scoring layer**
+  - Generates structured 0–100 fit score
+  - Provides explainable reasoning ("why this score")
+  - Outputs APPLY / SKIP decision logic
+
+---
+
 ## 🧠 Key Features
 
-### 🔍 Job Description Analysis
-Extracts:
-- Skills
-- Responsibilities
-- Qualifications
-- Keywords (ATS optimization)
+### 🔍 Job Type Classification Engine
+Classifies job postings into:
+- Intelligence / Investigations
+- Fraud & Risk Analytics
+- Security Analysis
+- Operations / Program Management
 
-### 📊 Fit Scoring Engine
-Computes a structured match score based on:
-- Skills alignment
-- Experience relevance
-- Domain overlap
-- Role seniority match
+### 🧭 Eligibility Evaluation Layer
+Evaluates strict job requirements:
+- Years of experience thresholds
+- Degree requirements
+- Must-have qualifications
 
-### 🧠 Gap Analysis
-Identifies:
-- Missing skills
-- Weak experience areas
-- Suggested improvements
+Prevents over-scoring in non-eligible roles.
 
-### 📝 Resume Tailoring
+### 📊 Hybrid Fit Scoring System
+Combines:
+- Rule-based classification signals
+- LLM-generated evaluation
+- Role alignment scoring
+
+Outputs:
+- 0–100 fit score
+- Confidence level
+- APPLY / SKIP decision
+
+### 🧠 Explainable AI Output
+Each result includes:
+- Key strengths
+- Key gaps
+- Simplified rationale ("why this score")
+
+### 📝 Resume Optimization Support
 Generates:
-- Optimized bullet points
-- Keyword-aligned phrasing
-- Role-specific resume improvements
-
-### 🧭 Application Strategy
-Provides:
-- Apply vs. skip recommendation
-- Focus areas for interview prep
-- Optional certification suggestions
+- Improved resume bullets based on real experience
+- Role-aligned phrasing for intelligence/risk roles
 
 ---
 
 ## 🛠 Tech Stack
 
-- Python 🐍
-- Streamlit 📊
-- OpenAI API 🤖
-- JSON-based data structure
-- LLM prompt engineering
+- Python (Core engine) 🐍
+- Streamlit (UI Layer) 📊
+- OpenAI API (LLM reasoning layer) 🤖
+- Rule-based classification engine
+- JSON-config driven architecture
+- Hybrid deterministic + probabilistic scoring model
 
 ---
 
@@ -128,20 +157,19 @@ or
 
 ## 🎯 Use Cases
 
-- Federal job applications (DHS, FBI, intelligence)
-- Risk & fraud operations roles
-- Resume optimization before applying
-- Career planning and transition strategy
+- Security operations career alignment
+- Intelligence & threat analysis role screening
+- Fraud detection / risk analytics job evaluation
+- Structured career positioning in regulated environments
 
 ---
 
 ## 🔮 Future Enhancements
 
-- Multi-resume comparison mode
-- Job tracking dashboard
-- Chrome extension (LinkedIn / USAJobs integration)
-- Export tailored resume (PDF/DOCX)
-- Multi-model support (GPT + Claude switching)
+- Multi-job batch evaluation engine
+- Embedding-based semantic scoring layer
+- Job board discovery scraping
+- Job requirement decomposition (must-have vs nice-to-have)
 
 ---
 
@@ -158,4 +186,4 @@ This tool provides AI-generated guidance and should be used as a **decision supp
 Focus areas:
 - Security analysis
 - Risk & fraud analysis
-- AI-assisted career tooling
+- Intelligence, risk, and security analytics tooling
